@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RescueNet - Disaster Coordination</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="script.css">
+</head>
+<body>
+    <!-- Background Orbs -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+    
+    <div id="app">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="logo">Rescue<span>Net</span></div>
+            <div id="userInfo" class="hidden">
+                <span id="userNameDisplay"></span>
+                <button id="logoutBtn" class="btn-secondary">Logout</button>
+            </div>
+        </nav>
+
+        <!-- View 1: Login Portal -->
+        <div id="loginView" class="view active-view">
+            <div class="hero-section">
+                <div class="hero-icon">🚨</div>
+                <h1 class="hero-title">Disaster Response Network</h1>
+                <p class="hero-subtitle">Connecting citizens in need with critical rescue agencies.</p>
+            </div>
+            
+            <div class="login-container">
+                <div class="login-card user-login">
+                    <div class="card-icon">👤</div>
+                    <h2>Citizen Portal</h2>
+                    <p>Request emergency assistance immediately.</p>
+                    
+                    <form id="userLoginForm">
+                        <input type="text" id="usernameInput" placeholder="Enter your full name" required>
+                        <button type="submit" class="btn-primary">Enter as Citizen</button>
+                    </form>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="login-card agency-login">
+                    <div class="card-icon">🏢</div>
+                    <h2>Agency Portal</h2>
+                    <p>Coordinate rescues and monitor emergency requests.</p>
+                    <form id="agencyLoginForm">
+                        <input type="text" id="agencyNameInput" placeholder="Enter Agency Name" required>
+                        <button type="submit" class="btn-primary agency-btn">Enter as Agency</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 2: User Dashboard -->
+        <div id="userDashboardView" class="view hidden">
+            <div class="dashboard-container">
+                <div class="request-form-card">
+                    <h2>Emergency Rescue Request</h2>
+                    <p class="subtitle">Please provide accurate details to help agencies locate you quickly.</p>
+                    <form id="rescueRequestForm">
+                        <div class="form-group">
+                            <label for="emergencyType">Type of Emergency</label>
+                            <select id="emergencyType" required>
+                                <option value="" disabled selected>Select emergency type</option>
+                                <option value="flood">Flood</option>
+                                <option value="earthquake">Earthquake</option>
+                                <option value="fire">Fire</option>
+                                <option value="medical">Medical Emergency</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="locationInput">Your Current Location</label>
+                            <div class="location-wrapper">
+                                <input type="text" id="locationInput" placeholder="e.g., 123 Main St, City or GPS Coordinates" required>
+                                <button type="button" id="getLocationBtn" class="btn-icon" title="Get GPS Location">📍</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="descriptionInput">Additional Details</label>
+                            <textarea id="descriptionInput" rows="4" placeholder="Number of people, specific injuries, hazards, etc." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-danger btn-large">SEND RESCUE REQUEST</button>
+                    </form>
+                    <div id="requestStatusMessage" class="hidden"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 3: Agency Dashboard -->
+        <div id="agencyDashboardView" class="view hidden">
+            <div class="dashboard-header">
+                <h2>Active Rescue Requests & Map Coordination</h2>
+                <button id="refreshRequestsBtn" class="btn-secondary">↻ Refresh Data</button>
+            </div>
+            
+            <div class="agency-layout">
+                <div class="map-container-wrapper">
+                    <div id="map"></div>
+                </div>
+                <div class="requests-list-container">
+                    <div class="requests-grid" id="requestsGrid">
+                        <!-- Requests will be injected here via JavaScript -->
+                        <div class="loading-state">Loading active requests...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="client.js"></script>
+</body>
+</html>
